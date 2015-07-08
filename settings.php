@@ -13,7 +13,7 @@ define('DB_HOSTNAME','localhost');
 define('DB_USERNAME','root');
 define('DB_PASSWORD','');
 define('DB_DBNAME','blacklist');
-define('DB_PERFIX','bl_');
+define('DB_PREFIX','bl_');
 /*
 |--------------------------------------------------------------------------
 | Templates Directory Path
