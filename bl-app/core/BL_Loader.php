@@ -59,7 +59,7 @@ class BL_loader extends CI_Loader {
 			{
 				$_template = defined('ADMIN_TEMPLATES') ? ADMIN_TEMPLATES : 'default';
 				$this->_ci_view_paths = array(
-					APPPATH."\\views\\".$_template.DIRECTORY_SEPARATOR => TRUE
+					APPPATH.'\\views\\'.$_template.DIRECTORY_SEPARATOR => TRUE
 					);
 			}
 
