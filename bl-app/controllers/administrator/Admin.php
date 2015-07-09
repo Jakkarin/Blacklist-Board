@@ -5,15 +5,19 @@ class Admin extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->library('middleware');
-		$this->middleware->next('admin');
+		$this->load->middleware('admin');
+		$this->load->helper('admin');
 	}
 
 	public function index()
 	{
 		$this->load->helper('url');
-		$this->load->helper('admin');
 		$this->load->view_admin('main');
+	}
+
+	protected function rr()
+	{
+		echo 'test';
 	}
 
 }

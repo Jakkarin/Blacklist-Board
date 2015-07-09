@@ -1,89 +1,98 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
 	<meta charset="utf-8">
-	<title>Welcome to CodeIgniter</title>
-
-	<style type="text/css">
-
-	::selection { background-color: #E13300; color: white; }
-	::-moz-selection { background-color: #E13300; color: white; }
-
-	body {
-		background-color: #fff;
-		margin: 40px;
-		font: 13px/20px normal Helvetica, Arial, sans-serif;
-		color: #4F5155;
-	}
-
-	a {
-		color: #003399;
-		background-color: transparent;
-		font-weight: normal;
-	}
-
-	h1 {
-		color: #444;
-		background-color: transparent;
-		border-bottom: 1px solid #D0D0D0;
-		font-size: 19px;
-		font-weight: normal;
-		margin: 0 0 14px 0;
-		padding: 14px 15px 10px 15px;
-	}
-
-	code {
-		font-family: Consolas, Monaco, Courier New, Courier, monospace;
-		font-size: 12px;
-		background-color: #f9f9f9;
-		border: 1px solid #D0D0D0;
-		color: #002166;
-		display: block;
-		margin: 14px 0 14px 0;
-		padding: 12px 10px 12px 10px;
-	}
-
-	#body {
-		margin: 0 15px 0 15px;
-	}
-
-	p.footer {
-		text-align: right;
-		font-size: 11px;
-		border-top: 1px solid #D0D0D0;
-		line-height: 32px;
-		padding: 0 10px 0 10px;
-		margin: 20px 0 0 0;
-	}
-
-	#container {
-		margin: 10px;
-		border: 1px solid #D0D0D0;
-		box-shadow: 0 0 8px #D0D0D0;
-	}
-	</style>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Material Design Lite</title>
+	<link rel="stylesheet" href="<?php echo asset('assets/css/material.min.css') ?>">
+	<link rel="stylesheet" href="<?php echo asset('assets/css/app.css') ?>">
 </head>
 <body>
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--overlay-drawer-button container is-upgraded">
+		<header class="mdl-layout__header mdl-layout__header--scroll mdl-layout__header--transparent header">
+				<div class="mdl-layout__header-row">
+					<span class="mdl-layout-title">Title</span>
+					<div class="mdl-layout-spacer"></div>
+				</div>
+				<div class="mdl-layout__header-row mdl-layout--large-screen-only">
+					<div class="mdl-layout-spacer"></div>
+					<nav class="waterfall-demo-header-nav mdl-navigation">
+						<a class="mdl-button mdl-js-button" href="">Link</a>
+						<a class="mdl-button mdl-js-button" href="">Link</a>
+						<a class="mdl-button mdl-js-button" href="">Link</a>
+						<a class="mdl-button mdl-js-button" href="">Link</a>
+					</nav>
+				</div>
+		</header>
+		<div class="mdl-layout__drawer">
+			<span class="mdl-layout-title">Title</span>
+			<nav class="mdl-navigation">
+				<a class="mdl-navigation__link" href="">Link</a>
+				<a class="mdl-navigation__link" href="">Link</a>
+				<a class="mdl-navigation__link" href="">Link</a>
+				<a class="mdl-navigation__link" href="">Link</a>
+			</nav>
+		</div>
+		<main class="mdl-layout__content">
+			<div class="page-content">
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--6-col">6
+				</div>
+				<div class="mdl-cell mdl-cell--6-col">
+					<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+						<div class="mdl-tabs__tab-bar">
+							<a href="#starks-panel" class="mdl-tabs__tab is-active">Starks</a>
+							<a href="#lannisters-panel" class="mdl-tabs__tab">Lannisters</a>
+							<a href="#targaryens-panel" class="mdl-tabs__tab">Targaryens</a>
+						</div>
 
-<div id="container">
-	<h1>Welcome to CodeIgniter!</h1>
-
-	<div id="body">
-		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
-
-		<p>If you would like to edit this page you'll find it located at:</p>
-		<code>application/views/welcome_message.php</code>
-
-		<p>The corresponding controller for this page is found at:</p>
-		<code>application/controllers/Welcome.php</code>
-
-		<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
+						<div class="mdl-tabs__panel is-active" id="starks-panel">
+							<ul>
+								<li>Eddard</li>
+								<li>Catelyn</li>
+								<li>Robb</li>
+								<li>Sansa</li>
+								<li>Brandon</li>
+								<li>Arya</li>
+								<li>Rickon</li>
+							</ul>
+						</div>
+						<div class="mdl-tabs__panel" id="lannisters-panel">
+							<ul>
+								<li>Tywin</li>
+								<li>Cersei</li>
+								<li>Jamie</li>
+								<li>Tyrion</li>
+							</ul>
+						</div>
+						<div class="mdl-tabs__panel" id="targaryens-panel">
+							<ul>
+								<li>Viserys</li>
+								<li>Daenerys</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--12-col text-center">
+					<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+				</div>
+			</div>
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--8-col">
+					
+				</div>
+				<div class="mdl-cell mdl-cell--4-col">
+					
+				</div>
+			</div>
+		</main>
 	</div>
 
-	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
-</div>
 
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<script src="<?php echo asset('assets/js/material.min.js') ?>"></script>
 </body>
 </html>

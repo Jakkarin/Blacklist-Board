@@ -20,6 +20,42 @@ class BL_loader extends CI_Loader {
 		return $this->_ci_load(array('_ci_admin' => TRUE, '_ci_view' => $view, '_ci_vars' => $this->_ci_object_to_array($vars), '_ci_return' => $return));
 	}
 
+	/**
+	* method สำหรับนำเข้าไฟล์ middleware แล้วทำการประมวลผล
+	* @param string filename
+	* @return error page
+	*/
+	public function middleware($_name)
+	{
+		$_name = ucfirst($_name).'Middleware';
+		// นำเข้าไฟล์
+		require_once(APPPATH.'middleware\\'.$_name.'.php');
+		// ใช้งาน object
+		$obj = new $_name;
+		// check ค่าว่าจริงหรือไม่
+		if ($obj->run(true)) {
+			return true;
+		}
+		// ถ้าไม่จริง แสดง error 404
+		return show_404();
+	}
+
+	/**
+	* method สำหรับนำเข้าไฟล์ widget แล้วทำการประมวลผล
+	* @param string filename
+	* @param array
+	* @return string
+	*/
+	public function widget($name,$array=null) {
+		$name = ucfirst($name).'Widget';
+		require_once(APPPATH.'widgets\\'.$name.'.php');
+		$obj = new $name;
+		if (is_null($array)) {
+			return $obj->run();
+		} else {
+			return $obj->run($array);
+		}
+	}
 	// --------------------------------------------------------------------
 
 	/**

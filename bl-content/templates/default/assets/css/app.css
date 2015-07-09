@@ -1,0 +1,30 @@
+nav { box-shadow: none; }
+.panel img.icon {
+	width: 100%;
+	border-radius:3px; 
+}
+.panel > .collection {
+	border-radius:3px; 
+}
+.panel > .panel-heading {
+	padding: 2px;
+	margin-bottom:10px;
+	border-bottom: 1px solid #eee;
+}
+.panel > .row {
+	margin-bottom:10px;
+}
+.panel .panel-desc:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+.panel .panel-desc {
+	padding: 10px;
+	border-bottom: 1px dashed #e0e0e0;
+}
+.panel .panel-desc > .board-icon {
+	padding:0;
+	line-height: 0;
+}
+/*-- helper --*/

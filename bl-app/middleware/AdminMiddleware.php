@@ -5,8 +5,8 @@ Class AdminMiddleware
 {
 	function __construct()
 	{
-		$CI =& get_instance();
-		$CI->load->helper('url');
+		//$CI =& get_instance();
+		//$CI->load->helper('url');
 	}
 
 	public function run($next) {
