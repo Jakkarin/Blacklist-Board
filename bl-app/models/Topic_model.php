@@ -17,8 +17,13 @@ class Topic_model extends CI_Model {
 
 	public function get($n)
 	{
-		$query = $this->db->query('SELECT title,content FROM bl_topics LIMIT '.$n);
-		return $query->row_array();
+		$this->db->select('title,content');
+		$this->db->from('topics');
+		$this->db->limit($n);
+		$this->db->order_by('created_at', 'DESC');
+		//$query = $this->db->query('SELECT title,content FROM '.DB_PREFIX.'topics LIMIT '.$n);
+		//return $query->row_array();
+		return $this->db->get();
 	}
 
 	public function insert($data)

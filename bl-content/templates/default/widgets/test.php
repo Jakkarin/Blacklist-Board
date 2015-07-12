@@ -1,3 +1,3 @@
-<div class="video-container no-controls">
-	<iframe width="560" height="315" src="https://www.youtube.com/embed/JpMTS_PM1ws" frameborder="0" allowfullscreen></iframe>
+<div class="embed-responsive embed-responsive-16by9">
+	<iframe src="https://www.youtube.com/embed/aT3ff-ogwCo" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>
 </div>
