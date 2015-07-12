@@ -38,6 +38,7 @@ class BL_loader extends CI_Loader {
 		}
 		// ถ้าไม่จริง แสดง error 404
 		return show_404();
+		exit(0);
 	}
 
 	/**
