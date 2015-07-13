@@ -22,6 +22,7 @@ class Menu_model extends CI_Model {
 
 	public function all()
 	{
+		$this->db->order_by('order', 'ASC');
 		return $this->db->get($this->table)->result();
 	}
 

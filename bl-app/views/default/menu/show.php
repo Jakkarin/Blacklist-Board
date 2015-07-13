@@ -77,6 +77,10 @@
 					<label>sub</label>
 					<input ng-model="create.sub">
 				</md-input-container>
+				<md-input-container flex>
+					<label>order</label>
+					<input ng-model="create.order">
+				</md-input-container>
 				<md-select placeholder="Target" ng-model="create.target">
 					<md-option value="0">parent</md-option>
 					<md-option value="1">blank</md-option>

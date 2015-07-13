@@ -12,7 +12,7 @@
 	<md-dialog-content>
 		<div layout="row" layout-sm="column">
 			<md-input-container flex>
-				<label>Menuname</label>
+				<label>Name</label>
 				<input ng-model="edit.name">
 			</md-input-container>
 			<md-input-container flex>
@@ -31,6 +31,10 @@
 				<label>sub</label>
 				<input ng-model="edit.sub">
 			</md-input-container>
+				<md-input-container flex>
+					<label>order</label>
+					<input ng-model="edit.order">
+				</md-input-container>
 			<md-select placeholder="Target" ng-model="edit.target">
 				<md-option value="0">parent</md-option>
 				<md-option value="1">blank</md-option>
