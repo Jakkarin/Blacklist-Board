@@ -5,7 +5,8 @@ class MenuWidget
 {
 	public function run() {
 		$bl =& get_instance();
-		$data = $bl->output->cache_remember('widget.menu', 60, function() use ($bl) {
+		$time = $bl->config->item('cache_time');
+		$data = $bl->output->cache_remember('widget.menu', $time, function() use ($bl) {
 			$bl->load->model('menu_model');
 			$data = $bl->menu_model->all();
 			$a1 = [];
@@ -27,5 +28,6 @@ class MenuWidget
 			return compact('a1','a2','a3','c2','c3');
 		});
 		$bl->load->view('widgets/menu', $data);
+		//var_dump($bl->load->view('widgets/menu', $data));
 	}
 }
