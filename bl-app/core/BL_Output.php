@@ -52,7 +52,7 @@ class BL_Output extends CI_Output
 				return;
 			}
 		}
-		// retrun ค่า นะจ๊ะ ^w^ -.- ^0^
+		// return ค่า นะจ๊ะ ^w^ -.- ^0^
 		return $Data_NanoDesu['data'];
 	}
 
