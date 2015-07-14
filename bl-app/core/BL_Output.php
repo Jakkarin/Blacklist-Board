@@ -1,7 +1,7 @@
 <?php
 
 /**
-* 
+* เพิ่มระบบ cache ที่สามารถกำหนดได้ว่าจะเก็บอะไรบ้างไว้ใน cache
 */
 class BL_Output extends CI_Output
 {
