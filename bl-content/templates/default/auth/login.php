@@ -15,9 +15,9 @@
 			<div class="form-group">
 				<div class="input-group">
 						<span class="input-group-addons">
-							<label for="email">passwd :</label>
+							<label for="passwd">password :</label>
 						</span>
-						<input type="email" id="email" name="email" class="input-control">
+						<input type="password" id="passwd" name="passwd" class="input-control">
 					</div>
 				</div>
 			</div>
