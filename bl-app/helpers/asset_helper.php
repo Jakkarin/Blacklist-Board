@@ -16,3 +16,10 @@ if ( ! function_exists('asset'))
 		return get_instance()->config->base_url('bl-content/templates/'.APP_TEMPLATE.'/'.$uri, NULL);
 	}
 }
+
+if ( ! function_exists('import')) {
+	function import($path) {
+		$path = str_replace('/', '\\', $path);
+		include VIEWPATH.$path;
+	}
+}

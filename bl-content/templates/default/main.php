@@ -1,5 +1,5 @@
 <?php include 'layouts/header.php'; ?>
-<?php echo widget('menu'); ?>
+<?php include 'layouts/banner.php'; ?>
 
 <div class="container">
 	<div class="row">

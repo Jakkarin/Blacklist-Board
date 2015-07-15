@@ -70,7 +70,7 @@ class BL_loader extends CI_Loader {
 				break;
 			
 			case 'view':
-				return $this->_ci_load(array('_ci_plugin' => $action['1'], '_ci_view' => $arg));
+				return $this->_ci_load(array('_ci_plugin' => $action['1'], '_ci_view' => $arg, '_ci_vars' => $this->_ci_object_to_array([]), '_ci_return' => FALSE));
 				break;
 		}
 	}
@@ -138,97 +138,6 @@ class BL_loader extends CI_Loader {
 	// --------------------------------------------------------------------
 
 	/**
-	 * Model Loader
-	 *
-	 * Loads and instantiates models.
-	 *
-	 * @param	string	$model		Model name
-	 * @param	string	$name		An optional object name to assign to
-	 * @param	bool	$db_conn	An optional database connection configuration to initialize
-	 * @return	object
-	 */
-	public function model($model, $name = '', $db_conn = FALSE)
-	{
-		if (empty($model))
-		{
-			return $this;
-		}
-		elseif (is_array($model))
-		{
-			foreach ($model as $key => $value)
-			{
-				is_int($key) ? $this->model($value, '', $db_conn) : $this->model($key, $value, $db_conn);
-			}
-
-			return $this;
-		}
-
-		$path = '';
-
-		// Is the model in a sub-folder? If so, parse out the filename and path.
-		if (($last_slash = strrpos($model, '/')) !== FALSE)
-		{
-			// The path is in front of the last slash
-			$path = substr($model, 0, ++$last_slash);
-
-			// And the model name behind it
-			$model = substr($model, $last_slash);
-		}
-
-		if (empty($name))
-		{
-			$name = $model;
-		}
-
-		if (in_array($name, $this->_ci_models, TRUE))
-		{
-			return $this;
-		}
-
-		$CI =& get_instance();
-		if (isset($CI->$name))
-		{
-			show_error('The model name you are loading is the name of a resource that is already being used: '.$name);
-		}
-
-		if ($db_conn !== FALSE && ! class_exists('CI_DB', FALSE))
-		{
-			if ($db_conn === TRUE)
-			{
-				$db_conn = '';
-			}
-
-			$this->database($db_conn, FALSE, TRUE);
-		}
-
-		if ( ! class_exists('CI_Model', FALSE))
-		{
-			load_class('Model', 'core');
-		}
-
-		$model = ucfirst(strtolower($model));
-
-		foreach ($this->_ci_model_paths as $mod_path)
-		{
-			if ( ! file_exists($mod_path.'models/'.$path.$model.'.php'))
-			{
-				continue;
-			}
-
-			require_once($mod_path.'models/'.$path.$model.'.php');
-
-			$this->_ci_models[] = $name;
-			$CI->$name = new $model();
-			return $this;
-		}
-
-		// couldn't find the model
-		show_error('Unable to locate the model you have specified: '.$model);
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
 	 * Internal CI Data Loader
 	 *
 	 * Used to load views and files.
@@ -265,13 +174,15 @@ class BL_loader extends CI_Loader {
 			if ($_ci_admin === TRUE) {
 				$_template = defined('ADMIN_TEMPLATES') ? ADMIN_TEMPLATES : 'default';
 				$this->_ci_view_paths = array(
-					APPPATH.'\\views\\'.$_template.DIRECTORY_SEPARATOR => TRUE
+					APPPATH.'views\\'.$_template.DIRECTORY_SEPARATOR => TRUE
 					);
-			} elseif ($_ci_plugin) {
+			} elseif ($_ci_plugin !== FALSE) {
 				$_ci_file = $_ci_view.'View.php';
 				$this->_ci_view_paths = array(
-					CONTENT_PATH.'\\plugin\\'.$_ci_plugin.DIRECTORY_SEPARATOR => TRUE
+					CONTENT_PATH.'plugin\\'.$_ci_plugin.DIRECTORY_SEPARATOR => TRUE
 					);
+			} else {
+				$this->_ci_view_paths = array(VIEWPATH => TRUE);
 			}
 
 			foreach ($this->_ci_view_paths as $_ci_view_file => $cascade)

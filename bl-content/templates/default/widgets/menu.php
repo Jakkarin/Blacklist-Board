@@ -1,13 +1,14 @@
 <div class="left-menu">
-	<div id="dl-menu" class="dl-menuwrapper row">
-		<div class="dl-trigger col-xs-2">
+	<div id="dl-menu" class="dl-menuwrapper dl-table">
+		<div class="dl-trigger dl-cell width1p">
 			<button>Open Menu</button>
 		</div>
-		<div class="col-xs-10 bg-black">
-			<img src="<?php echo asset('assets/img/logo.jpg') ?>" width="45px">
-			&nbsp; Jakkarin - Logout
+		<div class="text-right dl-cell width100p">
+			Jakkarin - Logout&nbsp;
+			<img src="<?php echo asset('assets/img/logo.jpg') ?>" class="avatar-sm">
 		</div>
-		<ul class="dl-menu col-xs-12">
+		<div class="clearfix"></div>
+		<ul class="dl-menu left-menu">
 	<?php foreach ($a1 as $v1): ?>
 			<li>
 				<a href="<?php echo $v1['link']; ?>" class="truncate"><?php echo $v1['name']; ?></a>

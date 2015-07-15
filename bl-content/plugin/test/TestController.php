@@ -6,7 +6,7 @@ class Plugin_TestController extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->plugin('model:test','test');
-		$this->load->helper('plugin');
+		$this->load->helper(['plugin','asset','widget']);
 	}
 
 	public function index($method, $args=null)

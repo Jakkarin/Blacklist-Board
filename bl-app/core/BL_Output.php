@@ -73,6 +73,6 @@ class BL_Output extends CI_Output
 			return FALSE;
 		}
 		return TRUE;
-	}	
+	}
 
 }

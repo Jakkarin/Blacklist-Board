@@ -10,14 +10,8 @@
 	<link rel="stylesheet" href="<?php echo asset('assets/css/component.css') ?>">
 </head>
 <body>
-<header class="container">
-	<div class="row">
-		<div class="col-sm-2">
-			<img src="<?php echo asset('assets/img/logo.jpg') ?>" class="img-circle" width="100%">
-		</div>
-		<div class="col-sm-10">
-			<h1>Blacklist Board</h1>
-			<h2>เว็บบอร์ดสำหรับคนที่มีความสามารถไม่มากพอ [ยังไง?] ^.^</h2>
-		</div>
+<nav class="container">
+	<div class="row bg-black">
+		<?php echo widget('menu'); ?>
 	</div>
-</header>
+</nav>

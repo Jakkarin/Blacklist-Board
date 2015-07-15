@@ -1,24 +1,34 @@
 /*------------------------------
-BEGIN Menu Section 
-------------------------------*/
-.left-menu {
-	position:fixed;
-	z-index:9999;
-	top:0;
-	left:0;
-}
-/*------------------------------
-END Menu Section
-------------------------------*/
-/*------------------------------
 BEGIN Header Section 
 ------------------------------*/
 header {
-	margin-top:60px;
 	margin-bottom:25px;
 }
 /*------------------------------
 END Header Section
+------------------------------*/
+/*------------------------------
+BEGIN Menu Section 
+------------------------------*/
+nav.container {
+	margin-bottom: 25px;
+}
+div.left-menu {
+	position:relative;
+	z-index: 999;
+}
+ul.left-menu {
+	position:absolute;
+	top:45px;
+	left:0;
+	width: 300px;
+}
+.avatar-sm {
+	width: 45px;
+	height: 45px;
+}
+/*------------------------------
+END Menu Section
 ------------------------------*/
 .panel img.icon {
 	width: 100%;
@@ -49,6 +59,63 @@ END Header Section
 	line-height: 0;
 }
 /*------------------------------
+BEGIN Input Section 
+------------------------------*/
+.input-group {
+	display: table;
+	width: 100%;
+}
+.input-group input {
+	display: table-cell;
+}
+.input-group-addons {
+	display: table-cell;
+	text-align: center;
+	width: 1%;
+	white-space: nowrap;
+	vertical-align: middle;
+	padding: 5px;
+	background: #eee;
+	border: 1px solid #ccc;
+	border-right: 0;
+}
+.input-group.input-lg > .input-group-addons {
+	padding: 10px;
+}
+.input-group.input-sm > .input-group-addons {
+	padding: 0 5px;
+}
+input.input-control {
+	width: 100%;
+	padding: 5px 10px;
+	border: 1px solid #ccc;
+	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+input.input-control:active, input:focus {
+	border-color: #66afe9;
+	outline: 0;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+			box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+input.input-lg {
+	height: 46px;
+	padding: 10px 16px;
+	font-size: 18px;
+}
+input.input-sm {
+	padding: 5px 10px;
+	font-size: 12px;
+	height: 30px;
+}
+.form-group {
+	margin-top: 15px; 
+}
+/*------------------------------
+END Input Section 
+------------------------------*/
+/*------------------------------
 BEGIN Helper Section 
 ------------------------------*/
 /*-- background --*/
@@ -62,6 +129,9 @@ BEGIN Helper Section
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+.center {
+	margin: 0 auto;
 }
 .text-center {
 	text-align: center;
@@ -78,6 +148,28 @@ BEGIN Helper Section
 }
 .img-rounded {
 	border-radius: 6px;
+}
+.clearfix {
+	clear: both;
+}
+.pull-left {
+	float: left;
+}
+.pull-right {
+	float: right;
+}
+.width1p {
+	width: 1%;
+}
+.width100p {
+	width: 100%;
+}
+.dl-table {
+	display: table;
+	width: 100%;
+}
+.dl-cell {
+	display: table-cell;
 }
 /*------------------------------
 END Helper Section 

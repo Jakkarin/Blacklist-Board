@@ -28,6 +28,5 @@ class MenuWidget
 			return compact('a1','a2','a3','c2','c3');
 		});
 		$bl->load->view('widgets/menu', $data);
-		//var_dump($bl->load->view('widgets/menu', $data));
 	}
 }
