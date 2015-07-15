@@ -227,6 +227,9 @@ switch (ENVIRONMENT)
 	// Path to the front controller (this file)
 	define('FCPATH', dirname(__FILE__).'/');
 
+	// Path ของ content
+	define('CONTENT_PATH', dirname(__FILE__).'\\bl-content\\');
+
 	// Name of the "system folder"
 	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
 	

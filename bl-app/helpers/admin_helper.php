@@ -17,6 +17,10 @@ if ( ! function_exists('adminAsset'))
 		return get_instance()->config->base_url('bl-app/views/'.$_template.'/'.$uri, NULL);
 	}
 
+}
+
+if ( ! function_exists('is_post'))
+{
 	function is_post() {
 		return $_SERVER['REQUEST_METHOD'] === 'POST';
 	}

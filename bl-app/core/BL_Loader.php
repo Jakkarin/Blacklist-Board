@@ -3,6 +3,80 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class BL_loader extends CI_Loader {
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Model plugin Loader
+	 *
+	 * Loads and instantiates models.
+	 *
+	 * @param	string	$plugin		plugin name
+	 * @param	string	$model		Model name
+	 * @param	string	$name		An optional object name to assign to
+	 * @param	bool	$db_conn	An optional database connection configuration to initialize
+	 * @return	object
+	 */
+	public function plugin($action, $arg=null, $name = '', $db_conn = FALSE)
+	{
+		$action = explode(':', $action);
+		switch ($action['0']) {
+			case 'model':
+				if (empty($arg))	{
+					return $this;
+				} elseif (is_array($arg))	{
+					foreach ($arg as $key => $value) {
+						is_int($key) ? $this->model($value, '', $db_conn) : $this->model($key, $value, $db_conn);
+					}
+					return $this;
+				}
+
+				if (empty($name)) {
+					$name = $arg;
+				}
+
+				if (in_array($name, $this->_ci_models, TRUE)) {
+					return $this;
+				}
+
+				$CI =& get_instance();
+				if (isset($CI->$name)) {
+					show_error('The model name you are loading is the name of a resource that is already being used: '.$name);
+				}
+
+				if ($db_conn !== FALSE && ! class_exists('CI_DB', FALSE)) {
+					if ($db_conn === TRUE) {
+						$db_conn = '';
+					}
+					$this->database($db_conn, FALSE, TRUE);
+				}
+
+				if ( ! class_exists('CI_Model', FALSE)) {
+					load_class('Model', 'core');
+				}
+
+				$arg = ucfirst(strtolower($arg));
+				$_path = CONTENT_PATH.'plugin/'.$action['1'].'/'.$arg.'Model.php';
+				if (file_exists($_path)) {
+					require_once($_path);
+				}
+
+				$model_name = 'Plugin_'.$arg.'Model';
+				$this->_ci_models[] = $name;
+				$CI->$name = new $model_name();
+				return $this;
+
+				// couldn't find the model
+				show_error('Unable to locate the model you have specified: '.$arg);
+				break;
+			
+			case 'view':
+				return $this->_ci_load(array('_ci_plugin' => $action['1'], '_ci_view' => $arg));
+				break;
+		}
+	}
+
+	// --------------------------------------------------------------------
+
 	/**
 	 * View Admin Loader
 	 *
@@ -28,16 +102,15 @@ class BL_loader extends CI_Loader {
 	public function middleware($_name)
 	{
 		$_name = ucfirst($_name).'Middleware';
-		// นำเข้าไฟล์
-		require_once(APPPATH.'middleware\\'.$_name.'.php');
-		// ใช้งาน object
-		$obj = new $_name;
-		// check ค่าว่าจริงหรือไม่
-		if ($obj->run(true)) {
-			return true;
+		$_path = APPPATH.'middleware\\'.$_name.'.php';
+		if (file_exists($_path)) {
+			require_once($_path);
+			$obj = new $_name;
+			if ($obj->run(true)) {
+				return true;
+			}
 		}
-		// ถ้าไม่จริง แสดง error 404
-		return show_404();
+		return show_error('Unable to load the middleware file: '.$_name);
 		exit(0);
 	}
 
@@ -48,15 +121,111 @@ class BL_loader extends CI_Loader {
 	* @return string
 	*/
 	public function widget($name,$array=null) {
-		$name = ucfirst($name).'Widget';
-		require_once(APPPATH.'widgets\\'.$name.'.php');
-		$obj = new $name;
-		if (is_null($array)) {
-			return $obj->run();
-		} else {
-			return $obj->run($array);
+		$_name = ucfirst($name).'Widget';
+		$_path = APPPATH.'widgets\\'.$_name.'.php';
+		if (file_exists($_path)) {
+			require_once($_path);
+			$obj = new $_name;
+			if (is_null($array)) {
+				return $obj->run();
+			} else {
+				return $obj->run($array);
+			}
 		}
+		return 'Unable to load the widget : '.$_name;
 	}
+	
+	// --------------------------------------------------------------------
+
+	/**
+	 * Model Loader
+	 *
+	 * Loads and instantiates models.
+	 *
+	 * @param	string	$model		Model name
+	 * @param	string	$name		An optional object name to assign to
+	 * @param	bool	$db_conn	An optional database connection configuration to initialize
+	 * @return	object
+	 */
+	public function model($model, $name = '', $db_conn = FALSE)
+	{
+		if (empty($model))
+		{
+			return $this;
+		}
+		elseif (is_array($model))
+		{
+			foreach ($model as $key => $value)
+			{
+				is_int($key) ? $this->model($value, '', $db_conn) : $this->model($key, $value, $db_conn);
+			}
+
+			return $this;
+		}
+
+		$path = '';
+
+		// Is the model in a sub-folder? If so, parse out the filename and path.
+		if (($last_slash = strrpos($model, '/')) !== FALSE)
+		{
+			// The path is in front of the last slash
+			$path = substr($model, 0, ++$last_slash);
+
+			// And the model name behind it
+			$model = substr($model, $last_slash);
+		}
+
+		if (empty($name))
+		{
+			$name = $model;
+		}
+
+		if (in_array($name, $this->_ci_models, TRUE))
+		{
+			return $this;
+		}
+
+		$CI =& get_instance();
+		if (isset($CI->$name))
+		{
+			show_error('The model name you are loading is the name of a resource that is already being used: '.$name);
+		}
+
+		if ($db_conn !== FALSE && ! class_exists('CI_DB', FALSE))
+		{
+			if ($db_conn === TRUE)
+			{
+				$db_conn = '';
+			}
+
+			$this->database($db_conn, FALSE, TRUE);
+		}
+
+		if ( ! class_exists('CI_Model', FALSE))
+		{
+			load_class('Model', 'core');
+		}
+
+		$model = ucfirst(strtolower($model));
+
+		foreach ($this->_ci_model_paths as $mod_path)
+		{
+			if ( ! file_exists($mod_path.'models/'.$path.$model.'.php'))
+			{
+				continue;
+			}
+
+			require_once($mod_path.'models/'.$path.$model.'.php');
+
+			$this->_ci_models[] = $name;
+			$CI->$name = new $model();
+			return $this;
+		}
+
+		// couldn't find the model
+		show_error('Unable to locate the model you have specified: '.$model);
+	}
+
 	// --------------------------------------------------------------------
 
 	/**
@@ -75,7 +244,7 @@ class BL_loader extends CI_Loader {
 	protected function _ci_load($_ci_data)
 	{
 		// Set the default data variables
-		foreach (array('_ci_admin', '_ci_view', '_ci_vars', '_ci_path', '_ci_return') as $_ci_val)
+		foreach (array('_ci_admin', '_ci_view', '_ci_plugin', '_ci_vars', '_ci_path', '_ci_return') as $_ci_val)
 		{
 			$$_ci_val = isset($_ci_data[$_ci_val]) ? $_ci_data[$_ci_val] : FALSE;
 		}
@@ -92,11 +261,16 @@ class BL_loader extends CI_Loader {
 		{
 			$_ci_ext = pathinfo($_ci_view, PATHINFO_EXTENSION);
 			$_ci_file = ($_ci_ext === '') ? $_ci_view.'.php' : $_ci_view;
-			if ($_ci_admin === TRUE)
-			{
+
+			if ($_ci_admin === TRUE) {
 				$_template = defined('ADMIN_TEMPLATES') ? ADMIN_TEMPLATES : 'default';
 				$this->_ci_view_paths = array(
 					APPPATH.'\\views\\'.$_template.DIRECTORY_SEPARATOR => TRUE
+					);
+			} elseif ($_ci_plugin) {
+				$_ci_file = $_ci_view.'View.php';
+				$this->_ci_view_paths = array(
+					CONTENT_PATH.'\\plugin\\'.$_ci_plugin.DIRECTORY_SEPARATOR => TRUE
 					);
 			}
 
