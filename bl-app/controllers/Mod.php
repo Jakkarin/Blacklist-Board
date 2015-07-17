@@ -7,7 +7,7 @@ class Mod extends CI_Controller {
 		parent::__construct();
 	}
 
-	public function plugin($controller, $method=null)
+	public function plugin($controller=null, $method=null)
 	{
 		$controller_name = ucfirst(strtolower($controller));
 		$_path = CONTENT_PATH.'plugin/'.$controller.'/';
@@ -19,7 +19,7 @@ class Mod extends CI_Controller {
 			$run = new $class_name;
 			$args = func_get_args();
 			unset($args['0'],$args['1']);
-			$run->index($method, array_values($args));
+			$run->$method(array_values($args));
 			return TRUE;
 		}
 		return show_404();

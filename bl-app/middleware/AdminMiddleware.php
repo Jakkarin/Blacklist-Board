@@ -3,17 +3,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 Class AdminMiddleware
 {
-	function __construct()
-	{
-		//$CI =& get_instance();
-		//$CI->load->helper('url');
-	}
-
 	public function run($next) {
-		if (1+1===2) {
-			return $next;
+		$bl =& get_instance();
+		$bl->load->library('session');
+		if ($bl->session->has_userdata('login')) {
+			$bl->load->library('encrypt');
+			$data = $bl->session->userdata('login');
+			$login = unserialize($bl->encrypt->decode($data));
+			if ($login->role === '1') {
+				return $next;
+			}
 		}
 		return show_404();
-		
 	}
 }

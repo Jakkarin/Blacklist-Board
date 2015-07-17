@@ -4,8 +4,12 @@
 			<button>Open Menu</button>
 		</div>
 		<div class="text-right dl-cell width100p">
-			Jakkarin - Logout&nbsp;
+		<?php if ($this->auth): ?>
+			<?php echo $this->auth->email ?> - <a href="<?php echo site_url('auth/logout'); ?>">Logout</a>&nbsp;
 			<img src="<?php echo asset('assets/img/logo.jpg') ?>" class="avatar-sm">
+		<?php else: ?>
+			<a href="<?php echo site_url('auth/login'); ?>">Login</a>&nbsp;
+		<?php endif; ?>
 		</div>
 		<div class="clearfix"></div>
 		<ul class="dl-menu left-menu">

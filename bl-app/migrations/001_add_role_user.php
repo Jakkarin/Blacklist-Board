@@ -19,6 +19,18 @@ class Migration_Add_role_user extends CI_Migration {
 		));
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table('role_user');
+		$this->load->database();
+		$arr = array(
+			'0'	=> array(
+				'role_name'	=> 'admin'
+			),
+			'1'	=> array(
+				'role_name'	=> 'user'
+			),
+		);
+		foreach ($arr as $value) {
+			$this->db->insert('role_user', $value);
+		}
 	}
 
 	public function down()

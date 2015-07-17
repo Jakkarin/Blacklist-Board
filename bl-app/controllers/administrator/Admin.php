@@ -7,6 +7,8 @@ class Admin extends CI_Controller {
 		parent::__construct();
 		$this->load->middleware('admin');
 		$this->load->helper(['admin','url']);
+		$this->load->model('user_model');
+		$this->auth = $this->user_model->verify();
 	}
 
 	public function index()
@@ -18,5 +20,6 @@ class Admin extends CI_Controller {
 	{
 		$this->load->view_admin('dashboard');
 	}
+
 
 }

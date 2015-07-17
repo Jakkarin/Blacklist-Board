@@ -16,57 +16,17 @@ class BL_loader extends CI_Loader {
 	 * @param	bool	$db_conn	An optional database connection configuration to initialize
 	 * @return	object
 	 */
-	public function plugin($action, $arg=null, $name = '', $db_conn = FALSE)
+	public function plugin($action, $arg, $name = '', $db_conn = FALSE)
 	{
 		$action = explode(':', $action);
 		switch ($action['0']) {
 			case 'model':
-				if (empty($arg))	{
-					return $this;
-				} elseif (is_array($arg))	{
-					foreach ($arg as $key => $value) {
-						is_int($key) ? $this->model($value, '', $db_conn) : $this->model($key, $value, $db_conn);
-					}
-					return $this;
-				}
-
-				if (empty($name)) {
-					$name = $arg;
-				}
-
-				if (in_array($name, $this->_ci_models, TRUE)) {
-					return $this;
-				}
-
-				$CI =& get_instance();
-				if (isset($CI->$name)) {
-					show_error('The model name you are loading is the name of a resource that is already being used: '.$name);
-				}
-
-				if ($db_conn !== FALSE && ! class_exists('CI_DB', FALSE)) {
-					if ($db_conn === TRUE) {
-						$db_conn = '';
-					}
-					$this->database($db_conn, FALSE, TRUE);
-				}
-
-				if ( ! class_exists('CI_Model', FALSE)) {
-					load_class('Model', 'core');
-				}
-
 				$arg = ucfirst(strtolower($arg));
-				$_path = CONTENT_PATH.'plugin/'.$action['1'].'/'.$arg.'Model.php';
-				if (file_exists($_path)) {
-					require_once($_path);
-				}
-
-				$model_name = 'Plugin_'.$arg.'Model';
-				$this->_ci_models[] = $name;
-				$CI->$name = new $model_name();
-				return $this;
-
-				// couldn't find the model
-				show_error('Unable to locate the model you have specified: '.$arg);
+				$plugin = array(
+						'path' => CONTENT_PATH.'plugin/'.$action['1'].'/'.$arg.'Model.php',
+						'model_name' => 'Plugin_'.$arg.'Model'
+					);
+				$this->model($arg, $name, $db_conn, $plugin);
 				break;
 			
 			case 'view':
@@ -135,6 +95,86 @@ class BL_loader extends CI_Loader {
 		return 'Unable to load the widget : '.$_name;
 	}
 	
+	// --------------------------------------------------------------------
+
+	/**
+	 * Model Loader
+	 *
+	 * Loads and instantiates models.
+	 *
+	 * @param	string	$model		Model name
+	 * @param	string	$name		An optional object name to assign to
+	 * @param	bool	$db_conn	An optional database connection configuration to initialize
+	 * @return	object
+	 */
+	public function model($model, $name = '', $db_conn = FALSE, $plugin = FALSE)
+	{
+		if (empty($model)) {
+			return $this;
+		}
+		elseif (is_array($model)) {
+			foreach ($model as $key => $value) {
+				is_int($key) ? $this->model($value, '', $db_conn) : $this->model($key, $value, $db_conn);
+			}
+			return $this;
+		}
+		$path = '';
+		// Is the model in a sub-folder? If so, parse out the filename and path.
+		if (($last_slash = strrpos($model, '/')) !== FALSE) {
+			// The path is in front of the last slash
+			$path = substr($model, 0, ++$last_slash);
+
+			// And the model name behind it
+			$model = substr($model, $last_slash);
+		}
+		if (empty($name)) {
+			$name = $model;
+		}
+		if (in_array($name, $this->_ci_models, TRUE)) {
+			return $this;
+		}
+		$CI =& get_instance();
+		if (isset($CI->$name)) {
+			show_error('The model name you are loading is the name of a resource that is already being used: '.$name);
+		}
+		if ($db_conn !== FALSE && ! class_exists('CI_DB', FALSE)) {
+			if ($db_conn === TRUE)
+			{
+				$db_conn = '';
+			}
+
+			$this->database($db_conn, FALSE, TRUE);
+		}
+		if ( ! class_exists('CI_Model', FALSE)) {
+			load_class('Model', 'core');
+		}
+		$model = ucfirst(strtolower($model));
+		if ( ! empty($plugin)) {
+			foreach (array(CONTENT_PATH) as $mod_path) {
+				if ( ! file_exists($plugin['path'])) {
+					continue;
+				}
+				require_once($plugin['path']);
+				$model = $plugin['model_name'];
+				$this->_ci_models[] = $name;
+				$CI->$name = new $model();
+				return $this;
+			}
+		} else {
+			foreach ($this->_ci_model_paths as $mod_path) {
+				if ( ! file_exists($mod_path.'models/'.$path.$model.'.php')) {
+					continue;
+				}
+				require_once($mod_path.'models/'.$path.$model.'.php');
+				$this->_ci_models[] = $name;
+				$CI->$name = new $model();
+				return $this;
+			}
+		}
+		// couldn't find the model
+		show_error('Unable to locate the model you have specified: '.$model);
+	}
+
 	// --------------------------------------------------------------------
 
 	/**

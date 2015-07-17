@@ -1,4 +1,9 @@
 [
-	{"name":"dashboard","link":"#/"},
-	{"name":"menu","link":"#/menu"}
+	{"name":"dashboard","link":"#/","icon":"fa fa-dashboard","sub":"none"},
+	{"name":"webboard","link":"#/","icon":"fa fa-dashboard","sub": [
+		{"name":"category","link":"#/","icon":"fa fa-dashboard"},
+		{"name":"topics","link":"#/","icon":"fa fa-dashboard"},
+		{"name":"replies","link":"#/","icon":"fa fa-dashboard"}
+	]},
+	{"name":"menu","link":"#/","icon":"fa fa-menu","sub":"none"}
 ]

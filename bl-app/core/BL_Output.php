@@ -6,21 +6,18 @@
 class BL_Output extends CI_Output
 {
 
-	public function cache_remember($name, $time, $func)
+	public function cache_remember($name, $time, $func, $custom_path = null)
 	{
 		$CI =& get_instance();
 		$path = $CI->config->item('cache_path');
-		$cache_path = ($path === '') ? APPPATH.'cache/' : $path;
-		if ( ! is_dir($cache_path) OR ! is_really_writable($cache_path))
-		{
-			log_message('error', 'Unable to write cache file: '.$cache_path);
-			return;
-		}
+		$cache_path = str_replace('/', '\\', ($path === '') ? APPPATH.'cache/'.$custom_path : $path.$custom_path);
 		$name = md5($name);
 		$time = time() + ($time * 60);
 		if ( ! file_exists($cache_path.$name)) {
-			if ( ! $fp = @fopen($cache_path.$name, 'w+b'))
-			{
+			if ( ! is_dir($cache_path)) {
+				mkdir($cache_path, 0777, true);
+			}
+			if ( ! $fp = @fopen($cache_path.$name, 'w+b')) {
 				log_message('error', 'Unable to write cache file: '.$cache_path.$name);
 				return;
 			}
@@ -56,23 +53,19 @@ class BL_Output extends CI_Output
 		return $Data_NanoDesu['data'];
 	}
 
-	public function forget($name)
+	public function forget($name, $custom_path = null)
 	{
 		$CI =& get_instance();
 		$path = $CI->config->item('cache_path');
-		$cache_path = ($path === '') ? APPPATH.'cache/' : $path;
-		if ( ! is_dir($cache_path) OR ! is_readable($cache_path))
-		{
-			log_message('error', 'Unable to write cache file: '.$cache_path);
-			return;
+		$cache_path = ($path === '') ? APPPATH.'cache/'.$custom_path : $path.$custom_path;
+		if (is_dir($cache_path) || is_really_writable($cache_path)) {
+			$name = md5($name);
+			if (@unlink($cache_path.$name)) {
+				return true;
+			}
 		}
-		$name = md5($name);
-		if ( ! @unlink($cache_path.$name))
-		{
-			log_message('error', 'Unable to delete cache file for '.$uri);
-			return FALSE;
-		}
-		return TRUE;
+		log_message('error', 'Unable to delete cache file for '.$uri);
+		return false;
 	}
 
 }
