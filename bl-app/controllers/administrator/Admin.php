@@ -16,10 +16,14 @@ class Admin extends CI_Controller {
 		$this->load->view_admin('main');
 	}
 
+	public function login()
+	{
+		$this->load->view_admin('lock');
+	}
+
 	public function dashboard()
 	{
 		$this->load->view_admin('dashboard');
 	}
-
 
 }

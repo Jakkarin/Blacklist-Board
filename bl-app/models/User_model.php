@@ -5,6 +5,7 @@ class User_model extends CI_Model {
 
 	protected $table = 'user';
 	protected $table2 = 'role_user';
+	protected $table3 = 'user_secure';
 
 	public function __construct()
 	{
@@ -56,9 +57,21 @@ class User_model extends CI_Model {
 			$user = unserialize($this->encrypt->decode($user_cache));
 			if ($user->login_token === $login->login_token) {
 				return $login;
+				exit;
 			}
+			$this->session->unset_userdata('login');
 		}
 		return false;
+	}
+
+	public function getPasswd2($id) {
+		$this->load->database();
+		return $this->db->get_where($this->table3, array('id' => $id), 1, 0)->result()['0'];
+	}
+
+	public function setToken2($id, $token) {
+		$this->load->database();
+		return $this->db->update($this->table3, array('login_token' => $token), array('id' => $id));
 	}
 
 }

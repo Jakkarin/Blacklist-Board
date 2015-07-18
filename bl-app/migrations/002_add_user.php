@@ -56,6 +56,37 @@ class Migration_Add_user extends CI_Migration {
 			'passwd'		=> password_hash('admin', PASSWORD_BCRYPT),
 			'created_at'	=> time()
 		));
+		$this->dbforge->add_field(array(
+			'id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => TRUE,
+				'auto_increment' => TRUE
+			),
+			'uid' => array(
+				'type' => 'INT',
+				'constraint' => 11
+			),
+			'passwd2' => array(
+				'type' => 'VARCHAR',
+				'constraint' => '60'
+			),
+			'login_token' => array(
+				'type' => 'VARCHAR',
+				'constraint' => '16'
+			),
+			'updated_at' => array(
+				'type' => 'INT',
+				'constraint' => 11
+			),
+		));
+		$this->dbforge->add_key('id', TRUE);
+		$this->dbforge->create_table('user_secure');
+		$this->db->insert('user_secure', array(
+			'uid'			=> 1,
+			'passwd2'		=> password_hash(hash('sha512', 'admin'), PASSWORD_BCRYPT),
+			'updated_at'	=> time()
+		));
 	}
 
 	public function down()

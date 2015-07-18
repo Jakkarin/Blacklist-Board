@@ -1,9 +1,34 @@
+		</div>
 		<footer class="main-footer">
 			<div class="pull-right hidden-xs">
-				<b>Version</b> 2.2.0
+				<b>Version</b> 2.2.0 | {elapsed_time} ms | {memory_usage}
 			</div>
-			<strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
+			<strong>Templates by <b><a href="http://almsaeedstudio.com" class="text-black">Almsaeed Studio</a></b> Copyright &copy; 2014-2015.</strong> All rights reserved.
 		</footer>
+		<!-- Control Sidebar -->
+		<aside class="control-sidebar control-sidebar-dark">
+			<!-- Create the tabs -->
+			<ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+				<li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+				<li><a href="#control-sidebar-stats-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+				<li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+			</ul>
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<!-- Home tab content -->
+				<div class="tab-pane active" id="control-sidebar-home-tab">
+					<h3 class="control-sidebar-heading">Recent Activity</h3>
+				</div><!-- /.tab-pane -->
+				<!-- Stats tab content -->
+				<div class="tab-pane" id="control-sidebar-stats-tab">
+					<h3 class="control-sidebar-heading">Stats Tab Content</h3>
+				</div><!-- /.tab-pane -->
+				<!-- Settings tab content -->
+				<div class="tab-pane" id="control-sidebar-settings-tab">
+					<h3 class="control-sidebar-heading">Setting</h3>
+				</div><!-- /.tab-pane -->
+			</div>
+		</aside><!-- /.control-sidebar -->
 		<div class="control-sidebar-bg"></div>
 	</div>
 	<script type="text/javascript">
@@ -13,7 +38,7 @@
 	<script src="<?php echo adminAsset('assets/js/angular.min.js'); ?>"></script>
 	<script src="<?php echo adminAsset('assets/js/angular-route.min.js'); ?>"></script>
 	<script src="<?php echo adminAsset('assets/js/ngProgress.min.js'); ?>"></script>
-	<script src="<?php echo adminAsset('controller/mainController.js'); ?>"></script>
+	<script src="<?php echo adminAsset('controller/menuController.js'); ?>"></script>
 	<!-- jQuery 2.1.4 -->
 	<script src="<?php echo adminAsset('plugins/jQuery/jQuery-2.1.4.min.js'); ?>"></script>
 	<!-- jQuery UI 1.11.4 -->

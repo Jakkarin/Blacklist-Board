@@ -1,6 +1,6 @@
 var postConfig = { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, transformRequest: transformData };
-app = angular.module('app', ['ngRoute','ngProgress']);
-app.controller('mainController', function($scope, $http) {
+app = angular.module('menuApp', ['ngRoute','ngProgress']);
+app.controller('menuController', function($scope, $http) {
 	$http.get(mAsset + '/menu.json')
 		.success(function(res) {
 			$scope.menuData = res;
