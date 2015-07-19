@@ -12,7 +12,10 @@ class Auth extends CI_Controller {
 
 	public function index()
 	{
-		//$this->load->view('main');
+		if ($this->auth) {
+			return redirect('');
+		}
+		return redirect('auth/login');
 	}
 
 	public function login()
@@ -23,7 +26,7 @@ class Auth extends CI_Controller {
 		}
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$data = $this->input->post();
-			if ($this->user_model->check($data['email'], $data['passwd'])) {
+			if ($this->user_model->check($data['email'], $data['login_token']) && ! empty($data['passwd'])) {
 				return redirect('');
 			}
 			$this->session->set_flashdata('error', 'ไม่สามารถเข้าสู่ระบบได้เนื่องจาก email หรือ รหัสผ่านผิด');

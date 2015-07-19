@@ -39,3 +39,11 @@ if ( ! function_exists('import')) {
 		include VIEWPATH.$path;
 	}
 }
+
+if ( ! function_exists('auth'))
+{
+	function auth()
+	{
+		return get_instance()->auth;
+	}
+}

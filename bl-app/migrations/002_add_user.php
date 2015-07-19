@@ -53,7 +53,7 @@ class Migration_Add_user extends CI_Migration {
 			'role'			=> 1,
 			'username'		=> 'admin',
 			'email'			=> 'admin@admin.com',
-			'passwd'		=> password_hash('admin', PASSWORD_BCRYPT),
+			'passwd'		=> password_hash(hash('sha512', 'admin'), PASSWORD_BCRYPT),
 			'created_at'	=> time()
 		));
 		$this->dbforge->add_field(array(

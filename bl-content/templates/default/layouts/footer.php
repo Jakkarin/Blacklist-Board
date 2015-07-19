@@ -1,4 +1,4 @@
-<footer class="bg-black">
+<footer>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6">
@@ -11,13 +11,8 @@
 		</div>
 	</div>
 </footer>
-<script type="text/javascript" src="<?php echo asset('assets/js/modernizr.custom.js') ?>"></script>
 <script type="text/javascript" src="<?php echo asset('assets/js/jquery-2.1.4.min.js') ?>"></script>
-<script type="text/javascript" src="<?php echo asset('assets/js/jquery.dlmenu.js') ?>"></script>
-<script type="text/javascript">
-	$(function() {
-		$( '#dl-menu' ).dlmenu();
-	});
-</script>
+<script type="text/javascript" src="<?php echo asset('dist/js/bootstrap.min.js') ?>"></script>
+<script type="text/javascript" src="<?php echo asset('dist/js/sha512.js') ?>"></script>
 </body>
 </html>

@@ -71,7 +71,7 @@ class BL_loader extends CI_Loader {
 			}
 		}
 		return show_error('Unable to load the middleware file: '.$_name);
-		exit(0);
+		exit;
 	}
 
 	/**

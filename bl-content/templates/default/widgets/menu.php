@@ -1,43 +1,57 @@
-<div class="left-menu">
-	<div id="dl-menu" class="dl-menuwrapper dl-table">
-		<div class="dl-trigger dl-cell width1p">
-			<button>Open Menu</button>
+<nav class="navbar navbar-default">
+	<div class="container">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="<?php echo site_url(''); ?>">Blacklist</a>
 		</div>
-		<div class="text-right dl-cell width100p">
-		<?php if ($this->auth): ?>
-			<?php echo $this->auth->email ?> - <a href="<?php echo site_url('auth/logout'); ?>">Logout</a>&nbsp;
-			<img src="<?php echo asset('assets/img/logo.jpg') ?>" class="avatar-sm">
-		<?php else: ?>
-			<a href="<?php echo site_url('auth/login'); ?>">Login</a>&nbsp;
-		<?php endif; ?>
-		</div>
-		<div class="clearfix"></div>
-		<ul class="dl-menu left-menu">
-	<?php foreach ($a1 as $v1): ?>
-			<li>
-				<a href="<?php echo $v1['link']; ?>" class="truncate"><?php echo $v1['name']; ?></a>
-				<?php if (in_array($v1['id'], $c2)): ?>
-				<ul class="dl-submenu">
-					<?php foreach ($a2 as $v2): ?>
-					<?php if ($v2['sub'] === $v1['id']): ?>
-					<li>
-						<a href="<?php echo $v2['link']; ?>"><?php echo $v2['name']; ?></a>
-						<?php if (in_array($v2['id'], $c3)): ?>
-						<ul class="dl-submenu">
-							<?php foreach ($a3 as $v3): ?>
-							<?php if ($v3['sub'] === $v2['id']): ?>
-							<li><a href="<?php echo $v3['link']; ?>"><?php echo $v3['name']; ?></a></li>
-							<?php endif; ?>
-							<?php endforeach; ?>
-						</ul>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+				<li><a href="#">Link</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Action</a></li>
+						<li><a href="#">Another action</a></li>
+						<li><a href="#">Something else here</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="#">Separated link</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="#">One more separated link</a></li>
+					</ul>
+				</li>
+			</ul>
+		<?php if (auth()): ?>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#">Link</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+					<i class="glyphicon glyphicon-user"></i> <?php echo auth()->username; ?> <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Action</a></li>
+						<li><a href="#">Another action</a></li>
+						<li><a href="<?php echo site_url('auth/logout'); ?>">Sign out</a></li>
+						<?php if (auth()->role === '1'): ?>
+							<li role="separator" class="divider"></li>
+							<li><a href="<?php echo site_url('administrator'); ?>">Administrator Panel</a></li>
 						<?php endif; ?>
-					</li>
-					<?php endif; ?>
-					<?php endforeach; ?>
-				</ul>
-			<?php endif; ?>
-			</li>
-	<?php endforeach; ?>
-		</ul>
-	</div>
-</div>
+					</ul>
+				</li>
+			</ul>
+		<?php else: ?>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="<?php echo site_url('auth/login'); ?>">Sign in</a></li>
+				<li><a href="#">Register</a></li>
+			</ul>
+		<?php endif; ?>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav>

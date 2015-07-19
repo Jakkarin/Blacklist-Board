@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>AdminLTE 2 | Lockscreen</title>
+<title>BlacklistPanel | Lockscreen</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <!-- Bootstrap 3.3.4 -->
@@ -47,7 +47,7 @@
 		Enter your password to enter panel
 	</div>
 	<div class="text-center">
-		<a href="login.html">Or back to home</a>
+		<a href="<?php echo site_url('') ?>">Or back to home</a>
 	</div>
 	<div class="lockscreen-footer text-center">
 		Templates by <b><a href="http://almsaeedstudio.com" class="text-black">Almsaeed Studio</a></b> <br/>
@@ -60,10 +60,22 @@
 <script>
 	$('form').submit(function(e) {
 		e.preventDefault();
-		$.post('<?php echo site_url('administrator/lock/signin'); ?>', {
-			login_token: CryptoJS.SHA512($('form > div > input').val()).toString(),
-			<?php echo csrf_token_name(); ?>: '<?php echo csrf_token(); ?>'
-		}).done(function() { location.href = '<?php echo site_url('administrator'); ?>'; });
+		if ($('form > div > input').val() !== '') {
+			$.post('<?php echo site_url('administrator/lock/signin'); ?>', {
+				login_token: CryptoJS.SHA512($('form > div > input').val()).toString(),
+				<?php echo csrf_token_name(); ?>: '<?php echo csrf_token(); ?>'
+			}).done(function(data) { 
+				if (data === 'wait') {
+					alert('มีการพยายาม login มากเกินไป กรุณารอ 15 นาที');
+					$('form > div > input').val('');
+				} else if (data === 'wrong') {
+					alert('รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง');
+					$('form > div > input').val('');
+				} else {
+					location.href = '<?php echo site_url('administrator'); ?>';
+				}
+			});
+		}
 	});
 </script>
 </body>

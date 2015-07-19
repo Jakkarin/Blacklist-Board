@@ -1,0 +1,39 @@
+/*------------------------------
+BEGIN Header Section 
+------------------------------*/
+header {
+	margin-bottom:25px;
+}
+/*------------------------------
+END Header Section
+------------------------------*/
+
+/*------------------------------
+BEGIN Helper Section 
+------------------------------*/
+.bg-black {
+	background-color: #222222;
+	color: #ffffff;
+}
+.width1p {
+	width: 1%;
+}
+.width100p {
+	width: 100%;
+}
+/*------------------------------
+END Helper Section
+------------------------------*/
+
+/*------------------------------
+BEGIN Footer Section 
+------------------------------*/
+footer {
+	margin-top: 25px;
+	padding: 25px;
+	background-color: #222222;
+	color: #ffffff;
+}
+/*------------------------------
+END Footer Section
+------------------------------*/

@@ -24,6 +24,21 @@ class Lock extends CI_Controller {
 	{
 		if (is_post()) {
 			$this->load->library('session');
+
+			if (intval($this->session->userdata('p_login_attempt')['count']) >= 3) {
+				if (intval($this->session->userdata('p_login_attempt')['time']) <= time()) {
+					$this->session->unset_userdata('p_login_attempt');
+				}
+				echo 'wait';
+				exit;
+			}
+
+			$attempt = array(
+				'time' => time() + (15 * 60),
+				'count' => $this->session->has_userdata('p_login_attempt') ? intval($this->session->userdata('p_login_attempt')['count']) + 1 : 1
+			);
+			$this->session->set_userdata('p_login_attempt', $attempt);
+
 			$this->load->library('encrypt');
 			$passwd = $this->input->post('login_token');
 			$passwd2 = $this->user_model->getPasswd2($this->auth->id);
@@ -33,10 +48,11 @@ class Lock extends CI_Controller {
 				$this->session->set_userdata('panel', $token);
 				$this->user_model->setToken2($passwd2->id, $token);
 				$this->output->forget('user_secure.'.$this->auth->id, 'users/');
+				$this->session->unset_userdata('p_login_attempt');
 				return true;
 				exit;
 			}
-			return redirect('administrator/lock');
+			echo 'wrong';
 			exit;
 		}
 		return redirect('administrator/lock');
