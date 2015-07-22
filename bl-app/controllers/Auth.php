@@ -26,18 +26,17 @@ class Auth extends CI_Controller {
 		}
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$data = $this->input->post();
-			if ($this->user_model->check($data['email'], $data['login_token']) && ! empty($data['passwd'])) {
-				return redirect('');
+			if ($data['captcha'] === strtolower($this->session->userdata('captcha'))) {
+				$this->session->unset_userdata('captcha');
+				if ($this->user_model->check($data['email'], $data['login_token']) && ! empty($data['passwd'])) {
+					return redirect('');
+				}
+				$this->session->set_flashdata('error', 'Email หรือ รหัสผ่าน ไม่ถูกต้อง !');
 			}
-			$this->session->set_flashdata('error', 'ไม่สามารถเข้าสู่ระบบได้เนื่องจาก email หรือ รหัสผ่านผิด');
 			return redirect('auth/login');
 		} else {
 			$error = empty($this->session->flashdata('error')) ? null : $this->session->flashdata('error');
-			$csrf = array(
-				'name' => $this->security->get_csrf_token_name(),
-				'hash' => $this->security->get_csrf_hash()
-			);
-			return $this->load->view('auth/login', compact('error', 'csrf'));
+			return $this->load->view('auth/login', compact('error'));
 		}
 	}
 
